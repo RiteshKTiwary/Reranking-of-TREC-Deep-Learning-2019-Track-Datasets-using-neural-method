@@ -1,4 +1,62 @@
 # Reranking-of-TREC-Deep-Learning-2019-Track-Datasets-using-neural-method
 This repository contains step-by-step guide to perform reranking documents of TREC DL 2019 Track Datasets using state-of-the-arts methods
 
-* In the context of the TREC Deep Learning (DL) Track task, rerankers play a pivotal role in refining search results by reordering them based on their relevance, thereby significantly improving the accuracy and usefulness of retrieved information.
+* In the context of the TREC Deep Learning (DL) Track task, **rerankers** play a pivotal role in refining search results by reordering them based on their relevance, thereby significantly improving the accuracy and usefulness of retrieved information.
+
+## Introduction
+
+Reranker is a lightweight, effective, and efficient package designed for training and deploying deep language model rerankers. These rerankers are essential for improving the performance of information retrieval (IR), question answering (QA), and various other natural language processing (NLP) pipelines. In the context of the TREC Deep Learning (DL) Track task, rerankers are used to refine search results by reordering them based on relevance, thus enhancing the accuracy and usefulness of the retrieved information.
+
+## Task Details
+
+The task involved performing reranking on the TREC DL-2019 track document datasets. The following sections outline the step-by-step process used to complete the task.
+
+### Step 1: Setup
+
+First, clone the Reranker repository and install the required libraries:
+
+```sh
+git clone https://github.com/luyug/Reranker.git
+cd Reranker
+pip install .
+```
+
+### Step 2: Download Datasets
+
+Next, download the datasets required for the task from the following websites:
+
+1. Download _hdct-marco-train.zip_ from the website and unzip this.
+2. Download _msmarco-doctrain-qrels.tsv.gz , msmarco-docs.tsv.gz, msmarco-doctrain-queries.tsv.gz, msmarco-doctrain-top100.gz_ from official website and unzip all.
+3. Download _test.d100.tsv_ from this repository.
+4. Download official _qrel_ file from trec website.
+
+### Step 3: Preprocess Data
+
+Create a _train_data_ directory where you will save the preprocessed large JSON data in tokenized form. Build Localized Training Data from top Ranking by the help of python script _create_train_data_from_ranking.py_ using command line code as:
+```sh
+mkdir -p train_data
+
+for i in $(seq -f "%03g" 0 183); \
+do \
+    python3 create_train_data_from_ranking.py \
+    --tokenizer_name <model-name> \
+    --rank_file /path/to/bos/tmp11/zhuyund/hdct-marco-train-new/${i}.txt \
+    --json_dir /path/to/train_data \
+    --n_sample 10 \
+    --sample_from_top 100 \
+    --random \
+    --truncate 512 \
+    --qrel /path/to/msmarco-doctrain-qrels.tsv.gz \
+    --query_collection /path/to/msmarco-doctrain-queries.tsv \
+    --doc_collection /path/to/msmarco-docs.tsv; \
+done
+```
+It generates a training set with localized negatives in json directory. The models used for tokenization are:
+
+    bert-base
+    deberta
+    naver/cocondenser-ensembledistil
+    naver/cocondenser-selfdistil
+
+### Training
+
