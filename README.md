@@ -54,9 +54,9 @@ done
 It generates a training set with localized negatives in json directory. The models used for tokenization are:
 
     bert-base
-    deberta
+    deberta-v3
     naver/cocondenser-ensembledistil
     naver/cocondenser-selfdistil
 
-### Training
+### Step 4: Training
 
