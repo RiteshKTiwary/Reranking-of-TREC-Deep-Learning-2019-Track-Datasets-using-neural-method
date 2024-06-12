@@ -102,3 +102,29 @@ python3 converter_topk_texts_into_json.py  \
     --truncate 512 \
     --q_truncate -1
 ```
+Run inference with the help of generated input from last code using the trained model checkpoint using GPU with the following command:
+
+```sh
+torchrun \
+  --nproc_per_node 1 searcher_and_scorer.py \
+  --output_dir /path/to/testOutputF \
+  --model_name_or_path {path to checkpoints}/checkpoint-X000 \
+  --tokenizer_name <model-name> \
+  --do_predict \
+  --max_len 512 \
+  --fp16 \
+  --per_device_eval_batch_size 64 \
+  --dataloader_num_workers 8 \
+  --pred_path { path to testOutputF}/all.json \
+  --pred_id_file { path to testOutputF}/ids.tsv \
+  --rank_score_path { path to testOutputF}/scores.txt
+```
+
+Given previous command will generate a scores.txt file in the same output directory. 
+
+Further, convert the score to standard MS MARCO format to do trec_eval by the following command:
+
+```sh
+python3 converter_score_into_marco.py \
+--score_file {path to testOutputF}/scores.txt
+```
