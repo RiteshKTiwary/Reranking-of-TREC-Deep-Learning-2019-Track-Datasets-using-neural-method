@@ -94,7 +94,7 @@ First create a test output directory in which the following command will build r
 ```sh
 mkdir -p testOutputF
 
-python3 topk_text_2_json.py  \
+python3 converter_topk_texts_into_json.py  \
     --file /path/to/test.d100.tsv \
     --save_to { path to testOutputF}/all.json \
     --generate_id_to { path to testOutputF}/ids.tsv \
