@@ -46,7 +46,7 @@ Next, download the datasets required for the task from the following websites:
 
 1. Download _hdct-marco-train.zip_ from the website and unzip this.
 2. Download _msmarco-doctrain-qrels.tsv.gz , msmarco-docs.tsv.gz, msmarco-doctrain-queries.tsv.gz, msmarco-doctrain-top100.gz_ from official website and unzip all.
-3. Download _test.d100.tsv_ from this repository.
+3. Send me a request to download _test.d100.tsv_ .
 4. Download official _qrel_ file from trec website.
 
 ### Step 3: Preprocess Data
