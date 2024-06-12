@@ -125,6 +125,6 @@ Given previous command will generate a scores.txt file in the same output direct
 Further, convert the score to standard MS MARCO format to do trec_eval by the following command:
 
 ```sh
-python3 converter_score_into_marco.py \
+python3 converter_scores_into_marco.py \
 --score_file {path to testOutputF}/scores.txt
 ```
