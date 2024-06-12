@@ -66,22 +66,39 @@ For the training all models on a single NVIDIA RTX A5000 GPU following command w
 mkdir -p checkpoints
 
 torchrun \
---nproc_per_node 1 run_marco.py   \
---output_dir /b/ritesh/nle/checkpoints   \
---model_name_or_path bert-base-uncased   \
+--nproc_per_node 1 searcher_and_scorer.py   \
+--output_dir /path/to/checkpoints   \
+--model_name_or_path <model-name>   \
 --do_train   \
 --save_steps 2000   \
---train_dir /b/ritesh/nle/train_data   \
+--train_dir /path/to/train_data   \
 --max_len 512   \
 --fp16   \
---per_device_train_batch_size 1   \
+--per_device_train_batch_size 2   \
 --train_group_size 8   \
---gradient_accumulation_steps 1   \
---per_device_eval_batch_size 64   \
+--gradient_accumulation_steps 2   \
+--per_device_eval_batch_size 32   \
 --warmup_ratio 0.1   \
 --weight_decay 0.01   \
 --learning_rate 1e-5   \
 --num_train_epochs 2   \
 --overwrite_output_dir   \
 --dataloader_num_workers 8
+```
+Please note that You can run inference during training separtely by loading saved checkpoints. After training, the last few checkpoints are usually good.
+
+### Step 5: Inference
+
+First create a test output directory in which the following command will build ranking input:
+
+```sh
+mkdir -p testOutputF
+
+python3 topk_text_2_json.py  \
+    --file /path/to/test.d100.tsv \
+    --save_to { path to testOutputF}/all.json \
+    --generate_id_to { path to testOutputF}/ids.tsv \
+    --tokenizer <model-name> \
+    --truncate 512 \
+    --q_truncate -1
 ```
