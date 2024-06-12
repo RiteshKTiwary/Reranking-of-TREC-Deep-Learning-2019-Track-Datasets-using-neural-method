@@ -7,6 +7,25 @@ This repository contains step-by-step guide to perform reranking documents of TR
 
 Reranker is a lightweight, effective, and efficient package designed for training and deploying deep language model rerankers. These rerankers are essential for improving the performance of information retrieval (IR), question answering (QA), and various other natural language processing (NLP) pipelines. In the context of the TREC Deep Learning (DL) Track task, rerankers are used to refine search results by reordering them based on relevance, thus enhancing the accuracy and usefulness of the retrieved information.
 
+## Results
+
+The models used for tokenization are:
+
+    bert-base
+    deberta-v3
+    naver/cocondenser-ensembledistil
+    naver/cocondenser-selfdistil
+
+With the help of these four models, the obtained results are summerized in the table as:
+
+| Model                       | nDCG@10 | MRR    | MAP    |
+|-----------------------------|---------|--------|--------|
+| BERT-base                   | 0.5807  | 0.8682 | 0.2399 |
+| DeBERTa-V3                  | 0.6197  | 0.9050 | 0.2497 |
+| CoCondenser-EnsembleDistil  | 0.5924  | 0.8709 | 0.2398 |
+| CoCondenser-SelfDistil      | 0.6207  | 0.8992 | 0.2498 |
+
+
 ## Task Details
 
 The task involved performing reranking on the TREC DL-2019 track document datasets. The following sections outline the step-by-step process used to complete the task.
@@ -51,12 +70,7 @@ do \
     --doc_collection /path/to/msmarco-docs.tsv; \
 done
 ```
-It generates a training set with localized negatives in json directory. The models used for tokenization are:
-
-    bert-base
-    deberta-v3
-    naver/cocondenser-ensembledistil
-    naver/cocondenser-selfdistil
+It generates a training set with localized negatives in json directory. 
 
 ### Step 4: Training
 
